@@ -1,0 +1,24 @@
+.MMM-pihole-stats .tiles {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+
+.MMM-pihole-stats .tiles .tile {
+	border: 1px solid #aaa;
+	border-radius: 6px;
+	margin: 5px;
+	padding: 10px 20px;
+	text-align: left;
+	flex: 0 0 120px;
+	position: relative;
+	text-align: right;
+}
+
+.MMM-pihole-stats .tiles .fas {
+	position: absolute;
+	left: 10px;
+	color: rgba(40, 40, 40, 0.5);
+	font-size: 1.5em;
+	line-height: 0.9em;
+}

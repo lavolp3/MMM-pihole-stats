@@ -19,6 +19,12 @@ Module.register('MMM-pihole-stats', {
 
 		retryDelay: 1000 * 30,
 		initialLoadDelay: 0,
+
+		fullColor: true,
+	},
+
+	getStyles: function() {
+		return ['MMM-pihole-stats.css'];
 	},
 
 	// Define start sequence.
@@ -45,10 +51,68 @@ Module.register('MMM-pihole-stats', {
 			return wrapper;
 		}
 
-		var header = document.createElement('div');
+		/*var header = document.createElement('div');
 		header.className = 'small bright';
 		header.innerHTML = this.ads_blocked_today + ' ads blocked today. (' + this.ads_percentage_today + '%)';
-		wrapper.appendChild(header);
+		wrapper.appendChild(header);*/
+
+		var tiles = document.createElement('div');
+		tiles.className = 'tiles';
+
+		var total = document.createElement('div');
+		total.className = 'tile total_queries';
+
+		var worldSymbol = document.createElement('i');
+		worldSymbol.className = 'medium fas fa-globe-americas';
+
+		total.innerText = this.dns_queries_today;
+		total.appendChild(worldSymbol);
+
+		var blockedToday = document.createElement('div');
+		blockedToday.className = 'tile blocked_today';
+
+		var handSymbol = document.createElement('i');
+		handSymbol.className = 'medium fas fa-hand-paper';
+
+		blockedToday.innerText = this.ads_blocked_today;
+		blockedToday.appendChild(handSymbol);
+
+		var percToday = document.createElement('div');
+		percToday.className = 'tile percentage_today';
+
+		var percSymbol = document.createElement('i');
+		percSymbol.className = 'medium fas fa-chart-pie';
+
+		percToday.innerText = this.ads_percentage_today + '%';
+		percToday.appendChild(percSymbol);
+
+		var blacklist = document.createElement('div');
+		blacklist.className = 'tile blacklist';
+
+		var listSymbol = document.createElement('i');
+		listSymbol.className = 'medium fas fa-list-alt';
+
+		blacklist.innerText = this.domains_being_blocked;
+		blacklist.appendChild(listSymbol);
+
+		if (this.config.fullColor) {
+			total.style.backgroundColor = '#005c32';
+			blockedToday.style.backgroundColor = '#007997';
+			percToday.style.backgroundColor = '#b1720c';
+			blacklist.style.backgroundColor = '#913225';
+		} else {
+			worldSymbol.style.color = '#005c32';
+			handSymbol.style.color = '#007997';
+			percSymbol.style.color = '#b1720c';
+			listSymbol.style.color = '#913225';
+		}
+
+		tiles.appendChild(total);
+		tiles.appendChild(blockedToday);
+		tiles.appendChild(percToday);
+		tiles.appendChild(blacklist);
+		wrapper.appendChild(tiles);
+
 
 		if (this.top_sources && Object.keys(this.top_sources).length) {
 			var table = document.createElement('table');
